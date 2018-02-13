@@ -21,6 +21,30 @@ public class Test {
 			ProcessCommunicator pc = new ProcessCommunicatorImpl(netLinkIP);
 			
 			float Temp = pc.readFloat(new GroupAddress("0/1/0"));
+		//Lampes
+			pc.write(new GroupAddress("0/0/1"), true);
+			pc.write(new GroupAddress("0/0/2"), true);
+			pc.write(new GroupAddress("0/0/3"), true);
+			pc.write(new GroupAddress("0/0/4"), true);
+			
+			//retour état 
+			pc.readFloat(new GroupAddress("0/1/0"), true);
+			pc.readFloat(new GroupAddress("0/1/1"), true);
+			pc.readFloat(new GroupAddress("0/1/2"), true);
+			pc.readFloat(new GroupAddress("0/1/3"), true);
+			
+			
+			//Boutons poussoirs 
+			pc.write(new GroupAddress("0/2/0"), true);
+			pc.write(new GroupAddress("0/2/1"), true);
+			pc.write(new GroupAddress("0/2/2"), true);
+			pc.write(new GroupAddress("0/2/3"), true);
+			
+			//Discover connected gateways 
+			
+			Discoverer disc = new Discoverer(0, true);
+			disc.startSearch(100, true);
+			
 	
 	}
 }
