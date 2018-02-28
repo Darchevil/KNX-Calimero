@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="KNX/src"/>
+	<classpathentry kind="lib" path="/home/darchevil/.m2/repository/com/github/calimero/calimero-core/2.4-SNAPSHOT/calimero-core-2.4-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/home/darchevil/.m2/repository/org/slf4j/slf4j-api/1.8.0-alpha2/slf4j-api-1.8.0-alpha2.jar"/>
+	<classpathentry kind="output" path="KNX/bin"/>
+</classpath>
