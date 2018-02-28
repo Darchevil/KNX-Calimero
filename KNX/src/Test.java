@@ -38,31 +38,36 @@ public class Test {
 			ProcessCommunicator pc = new ProcessCommunicatorImpl(netLinkIP);
 			
 			boolean temp = pc.readBool(new GroupAddress("0/0/1"));
-
+			boolean button = pc.readBool(new GroupAddress("0/2/0"));
 			//Lampes
-			for(int i =0; i<5; i++) {
+			
+			//Ajout d'un bouton de démarrage 
+			if(button == true) //A l'appui sur le bouton...
+			{
+				for(int i =0; i<5; i++) { //Le bouton d'arrêt sera à placer dans le for
 				
-			pc.write(new GroupAddress("0/0/1"), false);
-			TimeUnit.SECONDS.sleep(1);
-			pc.write(new GroupAddress("0/0/1"), true);
-			TimeUnit.SECONDS.sleep(1);
-			pc.write(new GroupAddress("0/0/1"), false);
-			TimeUnit.SECONDS.sleep(1);
+					pc.write(new GroupAddress("0/0/1"), false);
+					TimeUnit.SECONDS.sleep(1);
+					pc.write(new GroupAddress("0/0/1"), true);
+					TimeUnit.SECONDS.sleep(1);
+					pc.write(new GroupAddress("0/0/1"), false);
+					TimeUnit.SECONDS.sleep(1);
 			
-			pc.write(new GroupAddress("0/0/2"), true);
-			TimeUnit.SECONDS.sleep(1);
-			pc.write(new GroupAddress("0/0/2"), false);
-			TimeUnit.SECONDS.sleep(1);
+					pc.write(new GroupAddress("0/0/2"), true);
+					TimeUnit.SECONDS.sleep(1);
+					pc.write(new GroupAddress("0/0/2"), false);
+					TimeUnit.SECONDS.sleep(1);
 			
-			pc.write(new GroupAddress("0/0/3"), true);
-			TimeUnit.SECONDS.sleep(1);
-			pc.write(new GroupAddress("0/0/3"), false);
-			TimeUnit.SECONDS.sleep(1);
+					pc.write(new GroupAddress("0/0/3"), true);
+					TimeUnit.SECONDS.sleep(1);
+					pc.write(new GroupAddress("0/0/3"), false);
+					TimeUnit.SECONDS.sleep(1);
+				
+					pc.write(new GroupAddress("0/0/4"), true);
+					TimeUnit.SECONDS.sleep(1);
+					pc.write(new GroupAddress("0/0/4"), false);
 			
-			pc.write(new GroupAddress("0/0/4"), true);
-			TimeUnit.SECONDS.sleep(1);
-			pc.write(new GroupAddress("0/0/4"), false);
-			
+				}
 			}
 			//Discover connected gateways 
 			
