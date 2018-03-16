@@ -37,22 +37,25 @@ public class Test {
 	
 	connection();
 	
+	
 	}
 		
 	
 	//***********************************CONNECTION************************************
 	public static void connection() throws KNXException, InterruptedException
 	{
-		KNXNetworkLinkIP netLinkIP = KNXNetworkLinkIP.newTunnelingLink(localaddr, remoteEP, false,TPSettings.TP1);
-		ProcessCommunicator pc = new ProcessCommunicatorImpl(netLinkIP);
+			KNXNetworkLinkIP netLinkIP = KNXNetworkLinkIP.newTunnelingLink(localaddr, remoteEP, false,TPSettings.TP1);
+			ProcessCommunicator pc = new ProcessCommunicatorImpl(netLinkIP);
 			
 			
 			boolean temp = pc.readBool(new GroupAddress("0/0/1"));
-			final GroupAddress button = new GroupAddress("0/2/0"); //Bouton poussoir
+			final GroupAddress button1 = new GroupAddress("0/2/0"); //Bouton poussoir
 			final GroupAddress buttonArret = new GroupAddress("0/2/2"); //Bouton poussoir
 			boolean state;
+			Chenillard C = new Chenillard(pc);
 			
-			final StateDP pushButton = new StateDP(button, "push", 0, DPTXlatorBoolean.DPT_SWITCH.getID());
+			
+		     
 			
 			
 			//Lampes			
@@ -61,13 +64,6 @@ public class Test {
 			//Message de démarrage 
 			System.out.println("Go !");
 			
-			
-			
-	
-			//Discover connected gateways 
-			
-//			Discoverer disc = new Discoverer(0, true);
-//			disc.startSearch(100, true);
 			
 			//********************************Listener**************************************
 			//Instanciation of NetworkLinkListener
@@ -88,36 +84,12 @@ public class Test {
 					System.out.println("targetadress : " + ((CEMILData) arg0.getFrame()).getDestination());
 					System.out.println("Message Code " + arg0.getFrame().getMessageCode());
 					
-					if((boolean) ((CEMILData) arg0.getFrame()).getDestination().equals(button)) //Condition de démarrage Si on détecte l'appui sur le 1er bouton poussoir
+					if((boolean) ((CEMILData) arg0.getFrame()).getDestination().equals(button1)) //Condition de démarrage Si on détecte l'appui sur le 1er bouton poussoir
 						{
 						try
 							{
-							while(!(boolean) ((CEMILData) arg0.getFrame()).getDestination().equals(buttonArret)) //Boucle infinie 
-							{
+								C.start();
 								
-								pc.write(new GroupAddress("0/0/1"), false);
-								TimeUnit.SECONDS.sleep(1);
-								pc.write(new GroupAddress("0/0/1"), true);
-								TimeUnit.SECONDS.sleep(1);
-								pc.write(new GroupAddress("0/0/1"), false);
-								TimeUnit.SECONDS.sleep(1);
-				
-								pc.write(new GroupAddress("0/0/2"), true);
-								TimeUnit.SECONDS.sleep(1);
-								pc.write(new GroupAddress("0/0/2"), false);
-								TimeUnit.SECONDS.sleep(1);
-						
-								pc.write(new GroupAddress("0/0/3"), true);
-								TimeUnit.SECONDS.sleep(1);
-								pc.write(new GroupAddress("0/0/3"), false);
-								TimeUnit.SECONDS.sleep(1);
-					
-								pc.write(new GroupAddress("0/0/4"), true);
-								TimeUnit.SECONDS.sleep(1);
-								pc.write(new GroupAddress("0/0/4"), false);
-								
-							}
-							
 							}
 						catch(Exception e)
 							{
@@ -125,6 +97,10 @@ public class Test {
 							}
 						
 						}
+					if ((boolean) ((CEMILData) arg0.getFrame()).getDestination().equals(buttonArret))
+					{
+						C.stopChenillard();
+					}
 																
 						
 				
@@ -144,4 +120,4 @@ public class Test {
 			
 	}
 	
-}
+} 
